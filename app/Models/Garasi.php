@@ -12,6 +12,18 @@ class Garasi extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public const TIPE_SEPEDA = 'sepeda';
+    public const TIPE_MOBIL = 'mobil';
+    public const TIPE_MOBIL_LISTRIK = 'mobil listrik';
+
+    public const MAX_UNIT_PER_TIPE = 999;
+
+    public const PREFIX_MAP = [
+        self::TIPE_SEPEDA => 'S',
+        self::TIPE_MOBIL => 'C',
+        self::TIPE_MOBIL_LISTRIK => 'E',
+    ];
+
     protected $fillable = [
         'garasi_id',
         'tipe_garasi',

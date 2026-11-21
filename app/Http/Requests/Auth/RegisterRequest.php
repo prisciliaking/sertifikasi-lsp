@@ -2,28 +2,24 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            // NIK wajib integer sesuai ketentuan briefing
+            'nik' => ['required', 'integer', 'unique:users,nik'],
+            'nama_lengkap' => ['required', 'string', 'max:255'],
+            'no_hp' => ['required', 'string', 'max:15'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
         ];
     }
 }

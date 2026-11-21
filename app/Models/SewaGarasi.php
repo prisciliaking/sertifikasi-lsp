@@ -13,6 +13,10 @@ class SewaGarasi extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public const TIPE_HARIAN = 'harian';
+    public const TIPE_BULANAN = 'bulanan';
+    public const MULTIPLIER_BULANAN = 25;
+
     protected $fillable = [
         'sewa_id',
         'nik',

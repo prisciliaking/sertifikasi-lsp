@@ -11,6 +11,13 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_PENYEWA = 'penyewa';
+
+    public const STATUS_MENUNGGU = 'menunggu';
+    public const STATUS_DITERIMA = 'diterima';
+    public const STATUS_DITOLAK = 'ditolak';
+
     protected $table = 'users';
     protected $primaryKey = 'nik';
     public $incrementing = false;
@@ -56,5 +63,16 @@ class User extends Authenticatable
     public function perpanjanganDiproses(): HasMany
     {
         return $this->hasMany(PerpanjanganSewa::class, 'admin_nik', 'nik');
+    }
+
+    // TAMBAHAN 2: Helper method yang reusable untuk cek role & status
+    public function isAdmin(): bool
+    {
+        return $this->role_name === self::ROLE_ADMIN;
+    }
+
+    public function isApproved(): bool
+    {
+        return $this->status_validasi === self::STATUS_DITERIMA;
     }
 }

@@ -13,6 +13,11 @@ class Kendaraan extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
+    public const TIPE_SEPEDA = 'sepeda';
+    public const TIPE_SEPEDA_MOTOR = 'sepeda motor';
+    public const TIPE_MOBIL = 'mobil';
+    public const TIPE_MOBIL_LISTRIK = 'mobil listrik';
+
     protected $fillable = [
         'kendaraan_id',
         'tipe_kendaraan',
@@ -38,5 +43,18 @@ class Kendaraan extends Model
     public function sewaGarasi(): HasMany
     {
         return $this->hasMany(SewaGarasi::class, 'kendaraan_id', 'kendaraan_id');
+    }
+
+    /**
+     * Mengembalikan daftar tipe garasi yang diizinkan untuk suatu tipe kendaraan.
+     */
+    public static function allowedTipeGarasi(string $tipeKendaraan): array
+    {
+        return match ($tipeKendaraan) {
+            self::TIPE_SEPEDA, self::TIPE_SEPEDA_MOTOR => [Garasi::TIPE_SEPEDA],
+            self::TIPE_MOBIL => [Garasi::TIPE_MOBIL],
+            self::TIPE_MOBIL_LISTRIK => [Garasi::TIPE_MOBIL, Garasi::TIPE_MOBIL_LISTRIK],
+            default => [],
+        };
     }
 }

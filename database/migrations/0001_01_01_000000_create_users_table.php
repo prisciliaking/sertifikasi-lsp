@@ -12,7 +12,7 @@ return new class extends Migration
             $table->unsignedBigInteger('nik')->primary();
             $table->string('nama_lengkap', 255);
             $table->string('no_hp', 15);
-            $table->string('email', 100)->unique();
+            $table->string('email', 255)->unique();
             $table->string('password', 255);
             $table->string('status_validasi', 10)->default('menunggu'); // menunggu, diterima, ditolak
             $table->string('role_name', 10);
