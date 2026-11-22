@@ -22,7 +22,13 @@ class GarasiController extends Controller
     {
         $filterTipe = $request->query('tipe');
 
-        $garasiList = Garasi::when($filterTipe, fn($q) => $q->where('tipe_garasi', $filterTipe))
+        $garasiList = Garasi::with([
+            'sewaGarasi' => fn($q) => $q
+                ->with('penyewa:nik,nama_lengkap')
+                ->where('tanggal_selesai', '>=', today())
+                ->orderBy('tanggal_mulai'),
+        ])
+            ->when($filterTipe, fn($q) => $q->where('tipe_garasi', $filterTipe))
             ->orderBy('garasi_id')
             ->paginate(15)
             ->withQueryString();
